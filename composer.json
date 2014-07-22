@@ -1,0 +1,12 @@
+{
+    "name": "rupertchen/jwt-kit",
+    "description": "Utilities for JSON Web Token (JWT)",
+    "keywords": ["JSON Web Token", "JWT", "JSON", "signature", "JWE", "JWS", "JOSE"],
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Rupert Chen",
+            "email": "rupert.chen@gmail.com"
+        }
+    ]
+}
