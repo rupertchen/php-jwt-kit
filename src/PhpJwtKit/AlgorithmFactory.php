@@ -15,8 +15,10 @@ class AlgorithmFactory {
   public function __construct() {
     // TODO: provide a registerAlgorithm($className, $algorithm)
     $this->registrations = array(
-      'HS256' => 'PhpJwtKit\Algorithm\Hs256',
-      'none' => 'PhpJwtKit\Algorithm\None'
+      'none' => 'PhpJwtKit\Algorithm\None',
+      'HS256' => 'PhpJwtKit\Algorithm\HmacSha',
+      'HS384' => 'PhpJwtKit\Algorithm\HmacSha',
+      'HS512' => 'PhpJwtKit\Algorithm\HmacSha'
     );
   }
 
@@ -26,6 +28,7 @@ class AlgorithmFactory {
    * @return Algorithm
    */
   public function build($algorithm) {
+    // TODO: support cached algorithms?
     if (!isset($this->registrations[$algorithm])) {
       throw new \DomainException('Unsupported algorithms: ' . $algorithm);
     }
@@ -33,6 +36,9 @@ class AlgorithmFactory {
     if (!class_exists($className)) {
       throw new \UnexpectedValueException('Bad algorithm registration');
     }
-    return new $className;
+    /** @var Algorithm $instance */
+    $instance = new $className;
+    $instance->init($algorithm);
+    return $instance;
   }
 }

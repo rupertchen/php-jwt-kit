@@ -10,7 +10,7 @@ class None implements Algorithm {
    * @param string $algorithm
    * @return void
    */
-  function init($algorithm) {
+  public function init($algorithm) {
     ;
   }
 
