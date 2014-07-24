@@ -1,12 +1,25 @@
 {
-    "name": "rupertchen/jwt-kit",
-    "description": "Utilities for JSON Web Token (JWT)",
-    "keywords": ["JSON Web Token", "JWT", "JSON", "signature", "JWE", "JWS", "JOSE"],
-    "minimum-stability": "stable",
-    "authors": [
-        {
-            "name": "Rupert Chen",
-            "email": "rupert.chen@gmail.com"
-        }
-    ]
+  "name": "rupertchen/jwt-kit",
+  "description": "Utilities for JSON Web Token (JWT)",
+  "keywords": ["JSON Web Token", "JWT", "JSON", "signature", "JWE", "JWS", "JOSE"],
+  "homepage": "http://github.com/rupertchen/php-jwt-kit",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "authors": [
+    {
+      "name": "Rupert Chen",
+      "email": "rupert.chen@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.21"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~3.7"
+  },
+  "autoload": {
+    "psr-0": {
+      "PhpJwtKit\\": "src/"
+    }
+  }
 }
