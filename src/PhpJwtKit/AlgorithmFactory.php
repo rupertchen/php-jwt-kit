@@ -9,17 +9,33 @@ namespace PhpJwtKit;
  */
 class AlgorithmFactory {
   /** @var  array */
-  private $registrations;
+  private $registrations = array();
 
 
-  public function __construct() {
-    // TODO: provide a registerAlgorithm($className, $algorithm)
-    $this->registrations = array(
-      'none' => 'PhpJwtKit\Algorithm\None',
-      'HS256' => 'PhpJwtKit\Algorithm\HmacSha',
-      'HS384' => 'PhpJwtKit\Algorithm\HmacSha',
-      'HS512' => 'PhpJwtKit\Algorithm\HmacSha'
-    );
+  /**
+   * @param string $className
+   * @param array $algParamValues
+   */
+  public function registerAlgorithms($className, array $algParamValues) {
+    foreach ($algParamValues as $alg) {
+      $this->registerAlgorithm($className, $alg);
+    }
+  }
+
+
+  /**
+   * @param string $className
+   * @param string $algParamValue
+   */
+  public function registerAlgorithm($className, $algParamValue) {
+    if (!$algParamValue) {
+      throw new \InvalidArgumentException('Invalid alg parameter value: ' . $algParamValue);
+    }
+    if (array_key_exists($algParamValue, $this->registrations)) {
+      throw new \UnexpectedValueException('Cannot re-register alg parameter value: ' . $algParamValue);
+    }
+    // skip verifying that the class exists to avoid autoloading every registration
+    $this->registrations[$algParamValue] = $className;
   }
 
 
