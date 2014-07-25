@@ -14,11 +14,9 @@ interface Algorithm {
 
 
   /**
-   * @todo change $key to $jwk?
-   *
    * @param string $data
-   * @param array $key
-   * @return string mixed
+   * @param Jwk $jwk
+   * @return string
    */
-  function sign($data, $key);
+  function encrypt($data, Jwk $jwk);
 }

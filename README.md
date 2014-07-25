@@ -9,7 +9,9 @@ Utilities for JSON Web Token (JWT)
 - For JWE, only support ???
 
 ## TODO
--   support alg:none
 -   separate services
 -   consider rename of JWT to JWS to be correct
--   learn what JWE is
+-   Reference JWA spec in algorithm factory
+-   Evaluate if Headers is necessary
+-   Replace key with JWK
+-   Add links to specs in readme

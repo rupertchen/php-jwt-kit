@@ -4,6 +4,8 @@ namespace PhpJwtKit\Algorithm;
 
 
 use PhpJwtKit\Algorithm;
+use PhpJwtKit\Jwk\OctetSequence;
+use PhpJwtKit\Jwk;
 
 class HmacSha implements Algorithm {
 
@@ -33,8 +35,11 @@ class HmacSha implements Algorithm {
   /**
    * @inheritdoc
    */
-  public function sign($data, $key) {
-    return hash_hmac($this->getHashAlgorithm(), $data, $key, true);
+  public function encrypt($data, Jwk $jwk) {
+    if (!$jwk instanceof OctetSequence) {
+      throw new \InvalidArgumentException();
+    }
+    return hash_hmac($this->getHashAlgorithm(), $data, $jwk->getKeyValue(), true);
   }
 
 

@@ -21,10 +21,10 @@ class Jwt {
   /**
    * @param string $payload
    * @param array $header
-   * @param string $key
+   * @param Jwk|null $jwk
    * @return string
    */
-  public static function encodeJws($payload, $header, $key) {
+  public static function encodeJws($payload, $header, Jwk $jwk = null) {
     // TODO: test this
     // TODO: Split into a separate JwtEncoder?
     // TODO: how to simplify alg specification AND allow flexibility in setting the header?
@@ -38,7 +38,7 @@ class Jwt {
     $signingInput = $encodedHeader . '.' . $encodedPayload;
 
     $algorithm = self::getAlgorithmFactory()->build($header[Headers::ALGORITHM]);
-    $signature = $algorithm->sign($signingInput, $key);
+    $signature = $algorithm->encrypt($signingInput, $jwk);
     return $encodedHeader . '.' . $encodedPayload . '.' . Base64Url::encode($signature);
   }
 
@@ -57,7 +57,7 @@ class Jwt {
     $header = json_decode(Base64Url::decode($encodedHeader), true);
     $algorithm = self::getAlgorithmFactory()->build($header[Headers::ALGORITHM]);
     $signingInput = $encodedHeader . '.' . $encodedPayload;
-    $signature = $algorithm->sign($signingInput, $key);
+    $signature = $algorithm->encrypt($signingInput, $key);
     return Base64Url::encode($signature) === $givenEncodedSignature;
   }
 }

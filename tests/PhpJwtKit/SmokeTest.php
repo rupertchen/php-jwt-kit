@@ -3,7 +3,17 @@
 namespace PhpJwtKit;
 
 
+use PhpJwtKit\Jwk\OctetSequence;
+
 class SmokeTest extends \PHPUnit_Framework_TestCase {
+
+  private function getJwk() {
+    return new OctetSequence(array(
+      'kty' => 'oct',
+      'k' => 'AyM1SysPpbyDfgZld3umj1qzKObwVMkoqQ-EstJQLr_T-1qS0gZH75aKtMN3Yj0iPS4hcgUuTwjAzZr1Z9CAow'
+    ));
+  }
+
 
   /**
    * Example of a JOSE header
@@ -32,11 +42,8 @@ class SmokeTest extends \PHPUnit_Framework_TestCase {
       'exp' => 1300819380,
       'http://example.com/is_root' => true
     );
-    $key = Base64Url::decode('AyM1SysPpbyDfgZld3umj1qzKObwVMkoqQ-EstJQLr_T-1qS0gZH75aKtMN3Yj0iPS4hcgUuTwjAzZr1Z9CAow');
     $expected = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2UiLCJleHAiOjEzMDA4MTkzODAsImh0dHA6XC9cL2V4YW1wbGUuY29tXC9pc19yb290Ijp0cnVlfQ.0stp4GfJhgUSjqUtkZ1Hfmt1bvPKiHSzojeTw3sr7R8';
-    // TODO: should things like the alg and key be set earlier on the service? or at the time of encoding?
-    // Need to ask about the common case and what is typically held constant during encoding
-    $this->assertEquals($expected, Jwt::encodeJws($payload, $jose, $key));
+    $this->assertEquals($expected, Jwt::encodeJws($payload, $jose, self::getJwk()));
   }
 
 
@@ -53,18 +60,18 @@ class SmokeTest extends \PHPUnit_Framework_TestCase {
       'exp' => 1300819380,
       'http://example.com/is_root' => true
     );
-    $key = Base64Url::decode('AyM1SysPpbyDfgZld3umj1qzKObwVMkoqQ-EstJQLr_T-1qS0gZH75aKtMN3Yj0iPS4hcgUuTwjAzZr1Z9CAow');
+
     $expected = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJpc3MiOiJqb2UiLCJleHAiOjEzMDA4MTkzODAsImh0dHA6XC9cL2V4YW1wbGUuY29tXC9pc19yb290Ijp0cnVlfQ.';
-    $this->assertEquals($expected, Jwt::encodeJws($payload, $jose, $key));
+    $this->assertEquals($expected, Jwt::encodeJws($payload, $jose, null));
   }
+
 
   /**
    * @test
    */
   public function jwsCompactSerializationValidation() {
-    $key = Base64Url::decode('AyM1SysPpbyDfgZld3umj1qzKObwVMkoqQ-EstJQLr_T-1qS0gZH75aKtMN3Yj0iPS4hcgUuTwjAzZr1Z9CAow');
     $jws = 'eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ.dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk';
-    $this->assertTrue(Jwt::validateJws($jws, $key));
+    $this->assertTrue(Jwt::validateJws($jws, self::getJwk()));
   }
 
 

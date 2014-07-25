@@ -4,6 +4,7 @@ namespace PhpJwtKit\Algorithm;
 
 
 use PhpJwtKit\Algorithm;
+use PhpJwtKit\Jwk;
 
 class None implements Algorithm {
   /**
@@ -18,7 +19,7 @@ class None implements Algorithm {
   /**
    * @inheritdoc
    */
-  public function sign($data, $key) {
+  public function encrypt($data, Jwk $key = null) {
     return '';
   }
 }

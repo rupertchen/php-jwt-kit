@@ -4,8 +4,9 @@ namespace PhpJwtKit;
 
 
 /**
- * Factory for building signers
- * http://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-31
+ * Factory for building algorithms
+ *
+ * @link http://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-31
  */
 class AlgorithmFactory {
   /** @var  array */
