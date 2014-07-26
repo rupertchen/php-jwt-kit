@@ -38,7 +38,7 @@ class JwkFactoryTest extends \PHPUnit_Framework_TestCase {
   /**
    * @test
    */
-  public function buildOct() {
+  public function buildOctFromJson() {
     $json = <<<EOT
 {
   "kty":"oct",
@@ -46,6 +46,21 @@ class JwkFactoryTest extends \PHPUnit_Framework_TestCase {
 }
 EOT;
     $jwk = $this->factory->buildFromJson($json);
+    $this->assertInstanceOf('PhpJwtKit\Jwk\OctetSequence', $jwk);
+    $this->assertEquals('oct', $jwk->getKeyType());
+    $this->assertEquals(Base64Url::decode('GawgguFyGrWKav7AX4VKUg'), $jwk->getKeyValue());
+  }
+
+
+  /**
+   * @test
+   */
+  public function buildOctFromArray() {
+    $array = array(
+      'kty' => 'oct',
+      'k' => 'GawgguFyGrWKav7AX4VKUg'
+    );
+    $jwk = $this->factory->buildFromArray($array);
     $this->assertInstanceOf('PhpJwtKit\Jwk\OctetSequence', $jwk);
     $this->assertEquals('oct', $jwk->getKeyType());
     $this->assertEquals(Base64Url::decode('GawgguFyGrWKav7AX4VKUg'), $jwk->getKeyValue());

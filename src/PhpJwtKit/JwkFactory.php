@@ -13,9 +13,19 @@ use PhpJwtKit\Jwk\OctetSequence;
 class JwkFactory {
   /**
    * @param string $json
+   * @return Jwk
    */
   public function buildFromJson($json) {
     $array = json_decode($json, true);
+    return $this->buildFromArray($array);
+  }
+
+
+  /**
+   * @param $array
+   * @return Jwk
+   */
+  public function buildFromArray(array $array) {
     $keyType = $array['kty'];
     switch ($keyType) {
 //      case 'EC':
